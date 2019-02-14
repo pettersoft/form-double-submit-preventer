@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+	<meta charset="utf-8">
+	<title>submit disabler</title>
+</head>
+<body>
+
+<form action="" id="asd">
+<div>
+	<input type="submit" value="submit input">
+</div>
+	<button type="submit">submit button</button>
+	<button type="button">button button</button>
+</form>
+
+<script
+  src="http://code.jquery.com/jquery-2.2.4.js"
+  integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+  crossorigin="anonymous"></script>
+ 
+<script src="submit-disabler.js"></script>
+<script>
+$("form").disableDoubleSubmit();
+</script>
+</body>
+</html>
