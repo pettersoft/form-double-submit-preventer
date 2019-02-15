@@ -2,7 +2,7 @@
 	$("form").disableDoubleSubmit() to mark all forms
 	$("#form") to specify a specific form
 	
-	EX:
+	ex:
 	$(function(){
 		$("form").disableDoubleSubmit();
 	});
@@ -11,23 +11,35 @@
     $.fn.disableDoubleSubmit = function (options) {
 
         var settings = $.extend({
-            disableLinks: false
+            disablelinks: false
         }, options);
 
         return this.each(function () {
             $(this).on("submit", function (evt) {
-                evt.preventDefault();
 
-                $(this).find("input[type=submit]").attr("disabled", "disabled");
-                $(this).find("button[type=submit]").attr("disabled", "disabled");
+                var buttonSelectors = "input[type=submit],button[type=submit]";
 
-                if (settings.disableLinks === true) {
-                    $(this).find("a").attr("disabled", "disabled");
-                    $(this).find("a").attr("href", "javascript:void(0);");
+                var $buttons = $(this).find(buttonSelectors);
+                if ($buttons.hasClass("no-pointer-events")) {
+                    return false;
                 }
-		    
-                // this.submit() will not work if any element is named/id:d submit
-                HTMLFormElement.prototype.submit.call(this);
+
+                $.each($buttons, function (index, elem) {
+                    $(elem).addClass("no-pointer-events");
+                    $(elem).addClass("disabled");
+                });
+
+                if (settings.disablelinks === true) {
+                    var a = $(this).find("a");
+                    
+                    a.addClass("disabled");
+                    a.addClass("no-pointer-events");
+                    a.attr("href", "javascript:void(0);");
+                }
+
+                setTimeout(function () {
+                    return true;
+                }, 50);
             });
         });
 
